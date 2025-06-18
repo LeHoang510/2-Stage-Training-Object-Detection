@@ -1,0 +1,28 @@
+path_config:
+  output_dir: outputs/test/mnist_experiment
+  checkpoint_path: outputs/train/mnist_experiment/best_model.pth  # Required
+
+dataset_config:
+  test:
+    type: MnistDataset
+    dataset_params:
+      root: data
+      split: true
+      download: true
+    dataloader_params:
+      batch_size: 64
+      shuffle: false
+      num_workers: 4
+
+model_config:
+  type: MnistModel
+  # params: # Custom and Optional
+
+evaluate_config:
+  metrics:
+    - function: mnist_accuracy
+    - function: mnist_f1_score
+      params: # Custom and Optional
+        average: macro
+
+  main_metric: accuracy # Required

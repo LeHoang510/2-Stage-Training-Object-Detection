@@ -1,0 +1,82 @@
+[tool.black]
+line-length = 100
+target-version = ["py38"]
+include = '\.pyi?$'
+exclude = '''
+/(
+    \.eggs
+  | \.git
+  | \.hg
+  | \.mypy_cache
+  | \.tox
+  | \.venv
+  | _build
+  | build
+  | dist
+  | notebooks
+  | outputs
+  | logs
+)/
+'''
+
+[tool.mypy]
+python_version = "3.10"
+ignore_missing_imports = true
+show_error_codes = true
+files = ["core", "models", "src"]
+exclude = [
+    '^docs/',
+    '^build/',
+    '^venv/',
+    '^notebooks/',
+    '^outputs/',
+    '^logs/',
+]
+disallow_untyped_defs = true
+warn_return_any = true
+warn_unused_configs = true
+
+[tool.bandit]
+skips = ["B101", "B404"]  # B101: assert used, B404: import subprocess
+targets = ["core", "models", "src"]
+
+[tool.ruff]
+line-length = 100
+select = [
+    "E",   # Pycodestyle errors
+    "F",   # Pyflakes
+    "I",   # Isort
+    "UP",  # Pyupgrade
+    "D",   # pydocstyle
+    "RUF", # Ruff-specific
+    "B",   # flake8-bugbear
+]
+ignore = [
+    "D203", # 1 blank line required before class docstring
+    "D212", # Multi-line docstring summary should start at the first line
+    "E501", # Line too long (handled by black)
+    "B008", # Do not perform function calls in argument defaults
+]
+fixable = ["ALL"]
+unfixable = ["RUF002", "RUF003"]
+target-version = "py38"
+src = ["core", "models", "src"]
+exclude = [
+    "build",
+    "dist",
+    "venv",
+    "notebooks",
+    "outputs",
+    "logs",
+    "**/__pycache__",
+]
+ignore-init-module-imports = true
+
+[tool.ruff.per-file-ignores]
+"__init__.py" = ["F401"]  # Unused imports in __init__ files
+"**/tests/*.py" = ["D"]   # Disable docstring checks in tests
+
+[tool.ruff.isort]
+known-first-party = ["core", "models", "src"]
+required-imports = ["from __future__ import annotations"]
+combine-as-imports = true

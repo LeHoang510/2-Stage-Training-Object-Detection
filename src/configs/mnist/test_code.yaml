@@ -1,0 +1,63 @@
+path_config:  
+  output_dir:  # Required or will be saved in the default
+  checkpoint_path: output_dir   
+  pretrained_path: output_dir
+
+dataset_config: 
+  train:
+    type: MnistDataset  # Required
+    dataset_params:  # Custom and Optional
+      root: false
+      split: true
+      download: true
+      accuracy: 0.95
+    dataloader_params: # Custom and Optional
+      batch_size: 64
+      shuffle: true
+      num_workers: 4
+
+  val:    # Optional
+    type: MnistDataset  # Required
+    dataset_params: # Custom and Optional
+      root: "./data"
+      split: false
+      download: true
+    dataloader_params: # Custom and Optional
+      batch_size: 100
+      shuffle: false
+      num_workers: 4
+
+model_config:
+  type: MnistModel # Required
+  # params: # Custom and Optional
+
+train_config:
+  num_epochs: 15  # Required
+  grad_clip: 5.0 # Custom and Optional
+
+  optimizer: # Required
+    type: Adam # Required
+    params: # Custom and Optional
+      lr: 0.01
+      weight_decay: 0.0001
+      amsgrad: false
+
+  scheduler: # Custom and Optional
+    type: StepLR # Required
+    params:
+      step_size: 5
+      gamma: 0.5   
+
+  early_stopping: # Custom and Optional
+    patience: 3
+    min_delta: 0.001
+    mode: max
+
+evaluate_config:
+  metrics: 
+    - function: mnist_accuracy
+    - function: mnist_f1_score
+      params: # Custom and Optional
+        average: weighted
+
+  main_metric: accuracy # Required
