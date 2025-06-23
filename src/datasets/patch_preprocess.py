@@ -263,9 +263,9 @@ def process_image(obj, output_dir, patch_size, nb_ps, nb_blob, nb_hns,
     )
 
     # Tạo blob patches
-    hn_patches = sample_blob_negatives(
-        img, boxes, patch_size, nb_blob, neg_cutoff=neg_cutoff, output_size=None
-    )
+    # hn_patches = sample_blob_negatives(
+    #     img, boxes, patch_size, nb_blob, neg_cutoff=neg_cutoff, output_size=None
+    # )
 
 
     # Kết hợp tất cả patches
